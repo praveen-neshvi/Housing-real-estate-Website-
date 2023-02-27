@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { Routes, RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 import { AppComponent } from './app.component';
 import { PropertyCardComponent } from './property/property-card/property-card.component';
@@ -11,6 +11,8 @@ import { NavbarComponent } from './property/navbar/navbar.component';
 import { HousingService } from './services/housing-service.service';
 import { AddPropertyComponent } from './property/add-property/add-property.component';
 import { PropertyDetailComponent } from './property/property-detail/property-detail.component';
+import { UserLoginComponent } from './user/user-login/user-login.component';
+import { UserRegisterComponent } from './user/user-register/user-register.component';
 
 // const appRoutes: Routes;
 
@@ -22,11 +24,14 @@ import { PropertyDetailComponent } from './property/property-detail/property-det
     NavbarComponent,
     AddPropertyComponent,
     PropertyDetailComponent,
+    UserLoginComponent,
+    UserRegisterComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    FormsModule,
+    FormsModule,             //for teamplate forms
+    ReactiveFormsModule,     //for reactive forms
     RouterModule.forRoot(
       [
         { path: '', component: PropertyListComponent },
@@ -34,6 +39,8 @@ import { PropertyDetailComponent } from './property/property-detail/property-det
         { path: 'add-property', component: AddPropertyComponent },
         { path: 'add-property', component: AddPropertyComponent },
         { path: 'property-detail/:id', component: PropertyDetailComponent },
+        { path: 'user/login', component: UserLoginComponent },
+        { path: 'user/register', component: UserRegisterComponent },
       ]
     )
   ],
