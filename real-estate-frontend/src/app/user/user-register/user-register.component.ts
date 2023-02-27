@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-user-register',
@@ -10,17 +10,29 @@ export class UserRegisterComponent implements OnInit{
 
   registerationForm!: FormGroup;
 
-  constructor() {}
+  constructor(private fb: FormBuilder) {}    //Using Form Builder, optimal way of using reactive forms
 
   ngOnInit(): void {
-      this.registerationForm = new FormGroup(
-        {
-          userName: new FormControl(null, Validators.required),
-          email: new FormControl(null, [Validators.required, Validators.email]),
-          password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
-          confirmPassword: new FormControl(null, [Validators.required]),
-          mobile: new FormControl(null, [Validators.required, Validators.maxLength(10)])
-        }, this.passwordMatchingValidator );
+      // this.registerationForm = new FormGroup(
+      //   {
+      //     userName: new FormControl(null, Validators.required),
+      //     email: new FormControl(null, [Validators.required, Validators.email]),
+      //     password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
+      //     confirmPassword: new FormControl(null, [Validators.required]),
+      //     mobile: new FormControl(null, [Validators.required, Validators.maxLength(10)])
+      //   }, this.passwordMatchingValidator );
+      this.createRegistartionForm();
+  }
+
+
+  createRegistartionForm() {
+    this.registerationForm = this.fb.group({
+      userName: [null, Validators.required],
+      email: [null, [Validators.required, Validators.email]],
+      password: [null, [Validators.required, Validators.minLength(8)]],
+      confirmPassword: [null, [Validators.required]],
+      mobile: [null, [Validators.required, Validators.maxLength(10)]]
+    }, {Validators: this.passwordMatchingValidator});
   }
 
   passwordMatchingValidator(fg: AbstractControl) : ValidationErrors | null {
