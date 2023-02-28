@@ -13,6 +13,8 @@ import { AddPropertyComponent } from './property/add-property/add-property.compo
 import { PropertyDetailComponent } from './property/property-detail/property-detail.component';
 import { UserLoginComponent } from './user/user-login/user-login.component';
 import { UserRegisterComponent } from './user/user-register/user-register.component';
+import { AlertifyService } from './services/alertify.service';
+import { UserService } from './services/user.service';
 
 // const appRoutes: Routes;
 
@@ -44,7 +46,11 @@ import { UserRegisterComponent } from './user/user-register/user-register.compon
       ]
     )
   ],
-  providers: [HousingService],
+  providers: [
+    HousingService,
+    AlertifyService,
+    UserService
+   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

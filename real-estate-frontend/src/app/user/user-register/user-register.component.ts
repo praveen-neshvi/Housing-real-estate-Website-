@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { User } from 'src/app/model/user';
+import { AlertifyService } from 'src/app/services/alertify.service';
+import { UserService } from 'src/app/services/user.service';
+
 
 @Component({
   selector: 'app-user-register',
@@ -8,9 +12,15 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors,
 })
 export class UserRegisterComponent implements OnInit{
 
+  user!: User;
   registerationForm!: FormGroup;
+  userSubmitted : boolean = false;  //later change this when user credentials get pushed into the database
 
-  constructor(private fb: FormBuilder) {}    //Using Form Builder, optimal way of using reactive forms
+  constructor(
+    private fb: FormBuilder,
+    private alertify: AlertifyService,
+    private userService : UserService
+    ) {}    //Using Form Builder, optimal way of using reactive forms
 
   ngOnInit(): void {
       // this.registerationForm = new FormGroup(
@@ -58,6 +68,33 @@ export class UserRegisterComponent implements OnInit{
   }
 
   onSubmit(){
-    console.log(this.registerationForm)
+    console.log(this.registerationForm);
+    this.userSubmitted = true;
+
+    if(this.registerationForm.valid){
+      // this.user = Object.assign(this.user, this.registerationForm.value)
+
+      this.userService.addUser(this.userData());
+      this.registerationForm.reset();
+      this.userSubmitted = false;
+      this.alertify.success("Congrats, you are successfully registered");
+    }
+    else{
+      this.alertify.error("Kindly provide required fields");
+    }
+
+    // this.userSubmitted = false;
+
   }
+
+  userData(): User{
+    return this.user = {
+      userName: this.userName.value,
+      email: this.email.value,
+      password: this.password.value,
+      mobile: this.mobile.value
+    }
+  }
+
+
 }
