@@ -12,7 +12,7 @@ export class UserService {
     let users = [];
     if(localStorage.getItem('Users')) {
       users = JSON.parse(localStorage.getItem('Users') as string);
-      users = [user, ...users];
+      users = [ ...users, user];
     }
     else{
       users = [user];
